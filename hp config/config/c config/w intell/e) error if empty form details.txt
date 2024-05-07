@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Validation</title>
+<script>
+function validateForm() {
+    // Get the values of the input fields
+    let name = document.forms["myForm"]["name"].value;
+    let email = document.forms["myForm"]["email"].value;
+    
+    // Check if any required field is empty
+    if (name === "" || email === "") {
+        // Display an error message
+        alert("Name and email must be filled out");
+        // Prevent the form from being submitted
+        return false;
+    }
+}
+</script>
+</head>
+<body>
+
+<h2>Form Validation</h2>
+
+<!-- Form with onsubmit event handler for form validation -->
+<form name="myForm" onsubmit="return validateForm()" method="post">
+  Name: <input type="text" name="name"><br>
+  Email: <input type="text" name="email"><br>
+  <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Shopping Cart</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .cart-item img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    .cart-item input {
+      width: 50px;
+    }
+
+    .cart-item button {
+      margin-left: 10px;
+      background-color: #f44336;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .cart-item button:hover {
+      background-color: #d32f2f;
+    }
+  </style>
+</head>
+<body ng-app="shoppingCartApp">
+  <div class="container" ng-controller="CartController as cartCtrl">
+    <h1>Dynamic Shopping Cart</h1>
+    
+    <div ng-repeat="item in cartCtrl.cartItems">
+      <div class="cart-item">
+        <img ng-src="{{ item.image }}" alt="{{ item.name }}">
+        <span>{{ item.name }}</span>
+        <input type="number" ng-model="item.quantity" min="1" max="10">
+        <span>{{ item.price * item.quantity | currency }}</span>
+        <button ng-click="cartCtrl.removeItem(item)">Remove</button>
+      </div>
+    </div>
+
+    <hr>
+
+    <label>Add Item:</label>
+    <select ng-model="selectedItem" ng-options="item.name for item in cartCtrl.availableItems"></select>
+    <button ng-click="cartCtrl.addItem(selectedItem)">Add to Cart</button>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script>
+    angular.module('shoppingCartApp', [])
+      .controller('CartController', function() {
+        var vm = this;
+
+        vm.cartItems = [];
+        vm.availableItems = [
+          { id: 1, name: 'Product 1', image: 'https://via.placeholder.com/50', price: 10 },
+          { id: 2, name: 'Product 2', image: 'https://via.placeholder.com/50', price: 15 },
+          { id: 3, name: 'Product 3', image: 'https://via.placeholder.com/50', price: 20 }
+        ];
+
+        vm.addItem = function(item) {
+          var existingItem = vm.cartItems.find(i => i.id === item.id);
+          if (existingItem) {
+            existingItem.quantity++;
+          } else {
+            vm.cartItems.push({ ...item, quantity: 1 });
+          }
+        };
+
+        vm.removeItem = function(item) {
+          var index = vm.cartItems.indexOf(item);
+          vm.cartItems.splice(index, 1);
+        };
+      });
+  </script>
+</body>
+</html>

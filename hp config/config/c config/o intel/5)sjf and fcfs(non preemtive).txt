@@ -1,0 +1,130 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_PROCESSES 100
+
+// Structure to represent a process
+struct Process {
+    int id;
+    int arrival_time;
+    int burst_time;
+    int completion_time;
+    int turnaround_time;
+    int waiting_time;
+};
+
+// Function to calculate average
+double avg(int a[], int n) {
+    int sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += a[i];
+    }
+    return (double)sum / (double)n;
+}
+
+// FCFS Scheduling Algorithm (Non-preemptive)
+void fcfs(struct Process processes[], int n) {
+    int current_time = 0;
+    int waiting_times[MAX_PROCESSES]; // Array to store waiting times
+    int turnaround_times[MAX_PROCESSES]; // Array to store turnaround times
+    
+    printf("\nGantt Chart for FCFS Scheduling:\n");
+    printf("0");
+    for (int i = 0; i < n; i++) {
+        if (current_time < processes[i].arrival_time) {
+            current_time = processes[i].arrival_time;
+        }
+        printf(" -> P%d", processes[i].id);
+        current_time += processes[i].burst_time;
+        printf(" (%d)", current_time);
+        
+        processes[i].completion_time = current_time;
+        processes[i].turnaround_time = processes[i].completion_time - processes[i].arrival_time;
+        processes[i].waiting_time = processes[i].turnaround_time - processes[i].burst_time;
+        
+        waiting_times[i] = processes[i].waiting_time;
+        turnaround_times[i] = processes[i].turnaround_time;
+    }
+    
+    double avgWT = avg(waiting_times, n);
+    double avgTAT = avg(turnaround_times, n);
+    printf("\n\nAverage Turnaround Time: %.2f\n", avgTAT);
+    printf("Average Waiting Time: %.2f\n", avgWT);
+}
+
+// SJF Scheduling Algorithm (Non-preemptive)
+void sjf_non_preemptive(struct Process processes[], int n) {
+    // Sorting the processes based on burst time (SJF - Non-preemptive)
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (processes[i].burst_time > processes[j].burst_time) {
+                struct Process temp = processes[i];
+                processes[i] = processes[j];
+                processes[j] = temp;
+            }
+        }
+    }
+    
+    int current_time = 0;
+    int waiting_times[MAX_PROCESSES]; // Array to store waiting times
+    int turnaround_times[MAX_PROCESSES]; // Array to store turnaround times
+    
+    printf("\nGantt Chart for SJF (Non-preemptive) Scheduling:\n");
+    printf("0");
+    for (int i = 0; i < n; i++) {
+        if (current_time < processes[i].arrival_time) {
+            current_time = processes[i].arrival_time;
+        }
+        printf(" -> P%d", processes[i].id);
+        current_time += processes[i].burst_time;
+        printf(" (%d)", current_time);
+        
+        processes[i].completion_time = current_time;
+        processes[i].turnaround_time = processes[i].completion_time - processes[i].arrival_time;
+        processes[i].waiting_time = processes[i].turnaround_time - processes[i].burst_time;
+        
+        waiting_times[i] = processes[i].waiting_time;
+        turnaround_times[i] = processes[i].turnaround_time;
+    }
+    
+    double avgWT = avg(waiting_times, n);
+    double avgTAT = avg(turnaround_times, n);
+    printf("\n\nAverage Turnaround Time: %.2f\n", avgTAT);
+    printf("Average Waiting Time: %.2f\n", avgWT);
+}
+
+int main() {
+    int n;
+    printf("Enter the number of processes: ");
+    scanf("%d", &n);
+    struct Process processes[MAX_PROCESSES];
+
+    // Input process details
+    for (int i = 0; i < n; i++) {
+        printf("Enter arrival time for Process %d: ", i + 1);
+        scanf("%d", &processes[i].arrival_time);
+        printf("Enter burst time for Process %d: ", i + 1);
+        scanf("%d", &processes[i].burst_time);
+        processes[i].id = i + 1;
+    }
+
+    int choice;
+    printf("\nCPU Scheduling Algorithms:\n");
+    printf("1. FCFS (First-Come, First-Served)\n");
+    printf("2. SJF (Shortest Job First - Non-preemptive)\n");
+    printf("Enter your choice: ");
+    scanf("%d", &choice);
+
+    switch (choice) {
+        case 1:
+            fcfs(processes, n);
+            break;
+        case 2:
+            sjf_non_preemptive(processes, n);
+            break;
+        default:
+            printf("Invalid choice\n");
+    }
+
+    return 0;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Square Outer Box with Rectangular Cell Boxes Inside</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .outer-box {
+        width: 80vmin; /* 80% of viewport width, ensures it's square */
+        height: 80vmin; /* Same as width to make it square */
+        margin: 50px auto;
+        border: 1px solid #000;
+        display: grid;
+        grid-template-columns: repeat(10, 1fr); /* 10 equal-width columns */
+        grid-auto-rows: 1fr; /* Rows take up remaining space */
+    }
+    .cell {
+        border: 1px solid #000;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+</head>
+<body>
+
+<div class="outer-box">
+    <div class="cell">Cell 1</div>
+    <div class="cell">Cell 2</div>
+    <div class="cell">Cell 3</div>
+    <div class="cell">Cell 4</div>
+    <div class="cell">Cell 5</div>
+    <div class="cell">Cell 6</div>
+    <div class="cell">Cell 7</div>
+    <div class="cell">Cell 8</div>
+    <div class="cell">Cell 9</div>
+    <div class="cell">Cell 10</div>
+</div>
+
+</body>
+</html>

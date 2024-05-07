@@ -1,0 +1,8 @@
+function isError(value) {
+    return value instanceof Error;
+}
+
+// Test
+let error = new Error("This is an error");
+console.log(isError(error)); // true
+console.log(isError("Not an error")); // false

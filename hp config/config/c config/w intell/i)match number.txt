@@ -1,0 +1,19 @@
+// Generate a random integer between 1 and 10
+const guessNumber = Math.floor(Math.random() * 10) + 1;
+
+// Prompt the user to input a guess number
+const userGuess = prompt("Guess a number between 1 and 10:");
+
+// Check if the user's input matches the guess number
+if (userGuess === null) {
+    console.log("You canceled the game.");
+} else {
+    const guess = parseInt(userGuess);
+    if (isNaN(guess)) {
+        console.log("Please enter a valid number.");
+    } else if (guess === guessNumber) {
+        console.log("Congratulations! You guessed the correct number.");
+    } else {
+        console.log(`Sorry, the correct number was ${guessNumber}.`);
+    }
+}

@@ -1,0 +1,122 @@
+// Define Question interface
+interface Question {
+    question: string;
+    options: string[];
+    correctAnswer: string;
+}
+
+// Define Quiz class
+class Quiz {
+    private questions: Question[];
+    private currentQuestionIndex: number;
+    private score: number;
+
+    constructor(questions: Question[]) {
+        this.questions = questions;
+        this.currentQuestionIndex = 0;
+        this.score = 0;
+    }
+
+    // Get current question
+    getCurrentQuestion(): Question {
+        return this.questions[this.currentQuestionIndex];
+    }
+
+    // Submit answer
+    submitAnswer(answer: string): boolean {
+        const currentQuestion = this.getCurrentQuestion();
+        if (answer === currentQuestion.correctAnswer) {
+            this.score++;
+            return true;
+        }
+        return false;
+    }
+
+    // Move to the next question
+    nextQuestion(): boolean {
+        this.currentQuestionIndex++;
+        return this.currentQuestionIndex < this.questions.length;
+    }
+
+    // Get quiz score
+    getScore(): number {
+        return this.score;
+    }
+}
+
+// Define questions
+const questions: Question[] = [
+    {
+        question: "What is the capital of France?",
+        options: ["London", "Paris", "Berlin", "Madrid"],
+        correctAnswer: "Paris"
+    },
+    {
+        question: "Which planet is known as the Red Planet?",
+        options: ["Venus", "Mars", "Jupiter", "Saturn"],
+        correctAnswer: "Mars"
+    },
+    {
+        question: "What is the powerhouse of the cell?",
+        options: ["Nucleus", "Chloroplast", "Mitochondria", "Ribosome"],
+        correctAnswer: "Mitochondria"
+    }
+];
+
+// Initialize quiz
+const quiz = new Quiz(questions);
+
+// Function to display current question
+function displayQuestion() {
+    const currentQuestion = quiz.getCurrentQuestion();
+    console.log(`Question: ${currentQuestion.question}`);
+    console.log("Options:");
+    currentQuestion.options.forEach((option, index) => {
+        console.log(`${index + 1}. ${option}`);
+    });
+}
+
+// Function to start the quiz
+function startQuiz() {
+    console.log("Welcome to the Quiz!\n");
+    displayQuestion();
+    takeQuiz();
+}
+
+// Function to take the quiz
+function takeQuiz() {
+    const readline = require('readline').createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+
+    readline.question('Enter your answer (1, 2, 3, 4): ', (answer) => {
+        const optionIndex = parseInt(answer) - 1;
+        const currentQuestion = quiz.getCurrentQuestion();
+
+        if (!isNaN(optionIndex) && optionIndex >= 0 && optionIndex < currentQuestion.options.length) {
+            const selectedOption = currentQuestion.options[optionIndex];
+            const isCorrect = quiz.submitAnswer(selectedOption);
+            if (isCorrect) {
+                console.log("Correct!\n");
+            } else {
+                console.log(`Incorrect! The correct answer is: ${currentQuestion.correctAnswer}\n`);
+            }
+
+            const hasNextQuestion = quiz.nextQuestion();
+            if (hasNextQuestion) {
+                displayQuestion();
+                takeQuiz();
+            } else {
+                console.log(`Quiz completed! Your score is: ${quiz.getScore()} out of ${quiz.questions.length}`);
+                readline.close();
+            }
+        } else {
+            console.log("Invalid input! Please enter a number between 1 and 4.");
+            takeQuiz();
+        }
+    });
+}
+
+// Start the quiz
+startQuiz();

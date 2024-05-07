@@ -1,0 +1,7 @@
+function isNotANumber(value) {
+  return typeof value === "number" && isNaN(value);
+}
+
+// Test
+console.log(isNotANumber(NaN)); // true
+console.log(isNotANumber("Not a number")); // false

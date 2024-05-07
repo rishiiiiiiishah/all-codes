@@ -1,0 +1,120 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+#define totalprocess 5
+
+// Making a struct to hold the given input 
+struct process {
+    int at, bt, pr, pno;
+};
+
+process proc[50];
+
+/*
+Writing comparator function to sort according to priority if 
+arrival time is same 
+*/
+bool comp(process a, process b) {
+    if (a.at == b.at) {
+        return a.pr < b.pr;
+    } else {
+        return a.at < b.at;
+    }
+}
+
+// Function to calculate average
+double avg(int a[], int n) {
+    int sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += a[i];
+    }
+    return (double)sum / (double)n;
+}
+
+// Function to display Gantt chart
+void displayGanttChart(const vector<pair<int, int>>& gantt_chart) {
+    cout << "Gantt Chart:\n";
+    for (const auto& p : gantt_chart) {
+        cout << "| P" << p.first << " ";
+    }
+    cout << "|\n";
+    for (const auto& p : gantt_chart) {
+        cout << p.second << " ";
+    }
+    cout << endl;
+}
+
+// Using FCFS Algorithm to find Waiting time
+void get_wt_time(int wt[]) {
+    // declaring service array that stores cumulative burst time 
+    int service[50];
+
+    // Initialising initial elements of the arrays
+    service[0] = proc[0].at;
+    wt[0] = 0;
+
+    for (int i = 1; i < totalprocess; i++) {
+        service[i] = proc[i - 1].bt + service[i - 1];
+        wt[i] = service[i] - proc[i].at;
+
+        // If waiting time is negative, change it into zero
+        if (wt[i] < 0) {
+            wt[i] = 0;
+        }
+    }
+}
+
+// Function to get turnaround time
+void get_tat_time(int tat[], int wt[]) {
+    // Filling turnaroundtime array
+    for (int i = 0; i < totalprocess; i++) {
+        tat[i] = proc[i].bt + wt[i];
+    }
+}
+
+// Function to find Gantt chart
+void findGanttChart(vector<pair<int, int>>& gantt_chart) {
+    int currentTime = 0;
+    for (int i = 0; i < totalprocess; i++) {
+        gantt_chart.emplace_back(proc[i].pno, currentTime);
+        currentTime += proc[i].bt;
+    }
+}
+
+int main() {
+    // Input for process details
+    for (int i = 0; i < totalprocess; i++) {
+        cout << "Enter details for Process " << i + 1 << " (Arrival Time, Burst Time, Priority): ";
+        cin >> proc[i].at >> proc[i].bt >> proc[i].pr;
+        proc[i].pno = i + 1;
+    }
+
+    // Sorting processes based on arrival time and priority
+    sort(proc, proc + totalprocess, comp);
+
+    // Display sorted process details
+    cout << "Sorted Process Details:\n";
+    cout << "Process_no\tArrival_time\tBurst_time\tPriority\n";
+    for (int i = 0; i < totalprocess; i++) {
+        cout << proc[i].pno << "\t\t" << proc[i].at << "\t\t" << proc[i].bt << "\t\t" << proc[i].pr << endl;
+    }
+
+    // Calculate waiting time and turnaround time
+    int wt[totalprocess], tat[totalprocess];
+    get_wt_time(wt);
+    get_tat_time(tat, wt);
+
+    // Display Gantt chart
+    vector<pair<int, int>> gantt_chart;
+    findGanttChart(gantt_chart);
+    displayGanttChart(gantt_chart);
+
+    // Calculate and display average waiting time and average turnaround time
+    cout << "Average Waiting Time: " << avg(wt, totalprocess) << endl;
+    cout << "Average Turnaround Time: " << avg(tat, totalprocess) << endl;
+
+    return 0;
+}

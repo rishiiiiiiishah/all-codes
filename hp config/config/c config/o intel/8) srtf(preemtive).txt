@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_PROCESSES 100
+
+// Structure to represent a process
+struct Process {
+    int id;
+    int arrival_time;
+    int burst_time;
+    int remaining_burst_time;
+    int completion_time;
+    int turnaround_time;
+    int waiting_time;
+};
+
+// Function to calculate average
+double avg(int a[], int n) {
+    int sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += a[i];
+    }
+    return (double)sum / (double)n;
+}
+
+// SRTF (Preemptive) Scheduling Algorithm
+void srtf(struct Process processes[], int n) {
+    int current_time = 0;
+    int completed_processes = 0;
+    int waiting_times[MAX_PROCESSES]; // Array to store waiting times
+    int turnaround_times[MAX_PROCESSES]; // Array to store turnaround times
+    
+    printf("\nGantt Chart for SRTF (Preemptive) Scheduling:\n");
+    printf("0");
+    while (completed_processes < n) {
+        int shortest_remaining_time = 999999; // Initialize with a large value
+        int selected_process = -1;
+        
+        for (int i = 0; i < n; i++) {
+            if (processes[i].arrival_time <= current_time && processes[i].remaining_burst_time < shortest_remaining_time && processes[i].remaining_burst_time > 0) {
+                shortest_remaining_time = processes[i].remaining_burst_time;
+                selected_process = i;
+            }
+        }
+        
+        if (selected_process == -1) {
+            printf(" -> Idle");
+            current_time++;
+            continue;
+        }
+        
+        processes[selected_process].remaining_burst_time--;
+        printf(" -> P%d", processes[selected_process].id);
+        current_time++;
+        
+        if (processes[selected_process].remaining_burst_time == 0) {
+            completed_processes++;
+            processes[selected_process].completion_time = current_time;
+            processes[selected_process].turnaround_time = processes[selected_process].completion_time - processes[selected_process].arrival_time;
+            processes[selected_process].waiting_time = processes[selected_process].turnaround_time - processes[selected_process].burst_time;
+            
+            waiting_times[selected_process] = processes[selected_process].waiting_time;
+            turnaround_times[selected_process] = processes[selected_process].turnaround_time;
+        }
+    }
+    
+    double avgWT = avg(waiting_times, n);
+    double avgTAT = avg(turnaround_times, n);
+    printf("\n\nAverage Turnaround Time: %.2f\n", avgTAT);
+    printf("Average Waiting Time: %.2f\n", avgWT);
+}
+
+int main() {
+    int n;
+    printf("Enter the number of processes: ");
+    scanf("%d", &n);
+    struct Process processes[MAX_PROCESSES];
+
+    // Input process details
+    for (int i = 0; i < n; i++) {
+        printf("Enter arrival time for Process %d: ", i + 1);
+        scanf("%d", &processes[i].arrival_time);
+        printf("Enter burst time for Process %d: ", i + 1);
+        scanf("%d", &processes[i].burst_time);
+        processes[i].id = i + 1;
+        processes[i].remaining_burst_time = processes[i].burst_time;
+    }
+
+    srtf(processes, n);
+
+    return 0;
+}
