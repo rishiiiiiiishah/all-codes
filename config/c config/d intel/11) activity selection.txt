@@ -1,0 +1,53 @@
+#include<stdio.h>
+
+// Structure to represent an activity
+struct Activity {
+    int start, finish;
+};
+
+// Function to perform activity selection
+void activitySelection(struct Activity activities[], int n) {
+    // Sort activities based on their finish times
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (activities[i].finish > activities[j].finish) {
+                // Swap activities[i] and activities[j]
+                struct Activity temp = activities[i];
+                activities[i] = activities[j];
+                activities[j] = temp;
+            }
+        }
+    }
+
+    printf("Selected activities:\n");
+
+    // The first activity is always selected
+    int i = 0;
+    printf("Activity %d: Start = %d, Finish = %d\n", i + 1, activities[i].start, activities[i].finish);
+
+    // Consider the remaining activities
+    for (int j = 1; j < n; j++) {
+        // If this activity has a start time greater than or equal to the finish time of the previous selected activity, then select it
+        if (activities[j].start >= activities[i].finish) {
+            printf("Activity %d: Start = %d, Finish = %d\n", j + 1, activities[j].start, activities[j].finish);
+            i = j; // Update the index of the last selected activity
+        }
+    }
+}
+
+int main() {
+    int n;
+    printf("Enter the number of activities: ");
+    scanf("%d", &n);
+
+    struct Activity activities[n];
+    printf("Enter the start and finish times of each activity:\n");
+    for (int i = 0; i < n; i++) {
+        printf("Activity %d: ", i + 1);
+        scanf("%d %d", &activities[i].start, &activities[i].finish);
+    }
+
+    activitySelection(activities, n);
+
+    return 0;
+}

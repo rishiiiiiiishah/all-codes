@@ -1,0 +1,19 @@
+// Function to convert Celsius to Fahrenheit
+function celsiusToFahrenheit(celsius) {
+  return (celsius * 9/5) + 32;
+}
+
+// Function to convert Fahrenheit to Celsius
+function fahrenheitToCelsius(fahrenheit) {
+  return (fahrenheit - 32) * 5/9;
+}
+
+// Test cases
+const celsiusTemperature = 60;
+const fahrenheitTemperature = 45;
+
+const fahrenheitResult = celsiusToFahrenheit(celsiusTemperature);
+console.log(`${celsiusTemperature}°C is ${fahrenheitResult}°F`);
+
+const celsiusResult = fahrenheitToCelsius(fahrenheitTemperature);
+console.log(`${fahrenheitTemperature}°F is ${celsiusResult}°C`);

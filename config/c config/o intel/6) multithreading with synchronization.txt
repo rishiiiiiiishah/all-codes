@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+
+#define NUM_THREADS 2
+
+int vacant;
+pthread_mutex_t lock;
+
+void* bookTickets(void* arg) {
+    int* userData = (int*)arg;
+    int userId = userData[0];
+    int ticketsNeeded = userData[1];
+
+    pthread_mutex_lock(&lock);
+    printf("Welcome, User %d\n", userId);
+    if (ticketsNeeded <= vacant) {
+        printf("%d tickets booked by User %d\n", ticketsNeeded, userId);
+        vacant -= ticketsNeeded;
+    } else {
+        printf("Sorry, User %d, not enough tickets available\n", userId);
+        printf("Do you want to book %d tickets instead (1/0)? ", vacant);
+        int choice;
+        scanf("%d", &choice);
+        if (choice == 1) {
+            printf("%d tickets booked by User %d\n", vacant, userId);
+            vacant = 0;
+        } else {
+            printf("No tickets booked by User %d\n", userId);
+        }
+    }
+    pthread_mutex_unlock(&lock);
+    pthread_exit(NULL);
+}
+
+int main() {
+    int ticketsAvailable, ticketsUser1, ticketsUser2;
+    pthread_t threads[NUM_THREADS];
+    int rc, i;
+    int userData[NUM_THREADS][2];
+
+    pthread_mutex_init(&lock, NULL);
+
+    printf("Enter the total number of tickets available: ");
+    scanf("%d", &ticketsAvailable);
+    vacant = ticketsAvailable;
+
+    printf("Enter the number of tickets User 1 needs: ");
+    scanf("%d", &ticketsUser1);
+    userData[0][0] = 1;
+    userData[0][1] = ticketsUser1;
+
+    printf("Enter the number of tickets User 2 needs: ");
+    scanf("%d", &ticketsUser2);
+    userData[1][0] = 2;
+    userData[1][1] = ticketsUser2;
+
+    for (i = 0; i < NUM_THREADS; i++) {
+        rc = pthread_create(&threads[i], NULL, bookTickets, (void*)userData[i]);
+        if (rc) {
+            printf("Error: Unable to create thread %d\n", rc);
+            exit(-1);
+        }
+    }
+
+    for (i = 0; i < NUM_THREADS; i++) {
+        pthread_join(threads[i], NULL);
+    }
+
+    pthread_mutex_destroy(&lock);
+    pthread_exit(NULL);
+}

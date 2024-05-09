@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Columns Example</title>
+<style>
+  .content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .columns {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .column {
+    width: 25%; /* Four columns by default */
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+  }
+  
+  /* For screens 992px wide or less */
+  @media (max-width: 992px) {
+    .column {
+      width: 50%; /* Two columns on smaller screens */
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="content">
+  <h2>Columns Example</h2>
+  
+  <!-- Four columns by default -->
+  <div class="columns">
+    <div class="column">Column 1</div>
+    <div class="column">Column 2</div>
+    <div class="column">Column 3</div>
+    <div class="column">Column 4</div>
+  </div>
+  
+  <p>This layout changes from four columns to two columns for screens 992 pixels wide or less.</p>
+</div>
+
+</body>
+</html>

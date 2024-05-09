@@ -1,0 +1,86 @@
+def conversion(a, count):
+    q = ""
+    current_n = len(a)
+    temp = count - current_n
+    if current_n != count:
+        q = "0" * temp + a
+    else:
+        q = a
+    return q
+
+def comp(a):
+    l = list(a)
+    for i in range(len(l)):
+        if l[i] == "1":
+            l[i] = "0"
+        else:
+            l[i] = "1"
+    b = "0" * (len(l) - 1) + "1"
+    return add("".join(l), b)
+
+def add(x, y):
+    max_len = max(len(x), len(y))
+    result = ''
+    carry = 0
+    for i in range(max_len - 1, -1, -1):
+        r = carry
+        if i < len(x) and x[i] == '1':
+            r += 1
+        if i < len(y) and y[i] == '1':
+            r += 1
+        if r % 2 == 1:
+            result = "1" + result
+        else:
+            result = "0" + result
+        if r < 2:
+            carry = 0
+        else:
+            carry = 1
+    return result
+
+dividend = int(input("Enter Dividend: "))
+divisor = int(input("Enter Divisor: "))
+Q = bin(dividend).replace("0b","")
+M = bin(divisor).replace("0b","")
+if len(M) > len(Q):
+    count = len(M)
+elif len(Q) == len(M):
+    count = len(Q)
+else:
+    count = len(Q)
+
+n = count
+Q = conversion(Q, count)
+M = "0" * 1 + conversion(M, count)
+count1 = len(M)
+nevM = comp(M)
+A = "0" * count1
+
+print("The table for Restoring Division")
+print("Count" + " " * count1 + "A" + " " * count1 + "Q" + " " * count1 + "Operation")
+print(str(count) + " " * count1 + A + " " * count1 + Q + " " * count1 + "initial")
+print("\n")
+
+while n > 0:
+    A = A[1:] + Q[0]
+    Q = Q[1:] + "_"
+    opp = "Left Shift"
+    print(" "*1 + " " * count1 +A + " " * count1 + Q + " " * count1 + opp)
+    A = add(A, nevM)
+    opp1 = "A+(-M)"
+    print(" "*1 + " " * count1 +A + " " * count1 + Q + " " * count1 + opp1)
+    if len(A) > count1:
+        A = A[1:]
+
+    if A[0] == "1":
+        Q = Q[:-1] + "0" 
+        A = add(A, M)
+    else:
+        Q = Q[:-1] + "1" 
+
+    print(str(n) + " " * count1 + A + " " * count1 + Q + " " * count1 + "initial")
+    print("\n")
+    n -= 1
+
+print(f"Quotient: {Q}")
+print(f"Remainder: {A}")

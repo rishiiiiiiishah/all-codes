@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upload Article Information</title>
+</head>
+<body>
+
+<h2>Upload Article Information</h2>
+
+<form action="#" method="post" enctype="multipart/form-data" id="articleForm">
+  <label for="filePath">File Path:</label><br>
+  <input type="file" id="filePath" name="filePath" accept=".txt, .pdf" required><br><br>
+  
+  <label for="authorName">Author Name:</label><br>
+  <input type="text" id="authorName" name="authorName" required><br><br>
+  
+  <label for="articleType">Type:</label><br>
+  <select id="articleType" name="articleType" required>
+    <option value="">Select Type</option>
+    <option value="technical">Technical</option>
+    <option value="literary">Literary</option>
+    <option value="general">General</option>
+  </select><br><br>
+  
+  <label for="subjectTopic">Subject Topic:</label><br>
+  <select id="subjectTopic" name="subjectTopic" required>
+    <option value="">Select Topic</option>
+    <option value="Science">Science</option>
+    <option value="Technology">Technology</option>
+    <option value="Arts">Arts</option>
+    <option value="History">History</option>
+    <!-- Add more options as needed -->
+  </select><br><br>
+  
+  <input type="submit" value="Submit">
+  <input type="reset" value="Reset">
+</form>
+
+</body>
+</html>

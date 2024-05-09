@@ -1,0 +1,13 @@
+function checkMultipleOf3Or7(number) {
+  if (number > 0 && (number % 3 === 0 || number % 7 === 0)) {
+      return true;
+  } else {
+      return false;
+  }
+}
+
+// Test cases
+console.log(checkMultipleOf3Or7(9)); // true (Multiple of 3)
+console.log(checkMultipleOf3Or7(14)); // true (Multiple of 7)
+console.log(checkMultipleOf3Or7(21)); // true (Multiple of 3 and 7)
+console.log(checkMultipleOf3Or7(5)); // false (Not multiple of 3 or 7)

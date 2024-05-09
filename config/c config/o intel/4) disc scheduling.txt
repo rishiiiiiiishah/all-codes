@@ -1,0 +1,290 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+
+void FCFS(int RQ[], int n, int initial) {
+    int TotalHeadMoment = 0;
+    printf("%d=>", initial);
+    for (int i = 0; i < n; i++) {
+        TotalHeadMoment += abs(RQ[i] - initial);
+        printf("%d=>", RQ[i]);
+        initial = RQ[i];
+    }
+    printf("end\nTotal head movement is %d\n", TotalHeadMoment);
+}
+
+void SSTF(int RQ[], int n, int initial) {
+    int TotalHeadMoment = 0, count = 0;
+    printf("%d=>", initial);
+    while (count != n) {
+        int min = INT_MAX, index;
+        for (int i = 0; i < n; i++) {
+            int d = abs(RQ[i] - initial);
+            if (min > d) {
+                min = d;
+                index = i;
+            }
+        }
+        TotalHeadMoment += min;
+        initial = RQ[index];
+        RQ[index] = INT_MAX;
+        count++;
+        printf("%d=>", initial);
+    }
+    printf("end\nTotal head movement is %d\n", TotalHeadMoment);
+}
+
+void SCAN(int RQ[], int n, int initial, int size, int move) {
+    int TotalHeadMoment = 0;
+    // Sort the request queue
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (RQ[j] > RQ[j + 1]) {
+                int temp = RQ[j];
+                RQ[j] = RQ[j + 1];
+                RQ[j + 1] = temp;
+            }
+        }
+    }
+    printf("%d=>", initial);
+    int index;
+    for (int i = 0; i < n; i++) {
+        if (initial < RQ[i]) {
+            index = i;
+            break;
+        }
+    }
+    if (move == 1) {
+        for (int i = index; i < n; i++) {
+            printf("%d=>", RQ[i]);
+            TotalHeadMoment += abs(RQ[i] - initial);
+            initial = RQ[i];
+        }
+        TotalHeadMoment += abs(size - RQ[n - 1]);
+        printf("%d=>0=>", size);
+        initial = 0;
+        for (int i = index - 1; i >= 0; i--) {
+            printf("%d=>", RQ[i]);
+            TotalHeadMoment += abs(RQ[i] - initial);
+            initial = RQ[i];
+        }
+    } else {
+        for (int i = index - 1; i >= 0; i--) {
+            printf("%d=>", RQ[i]);
+            TotalHeadMoment += abs(RQ[i] - initial);
+            initial = RQ[i];
+        }
+        TotalHeadMoment += abs(RQ[0]);
+        printf("0=>%d=>", RQ[0]);
+        initial = size - 1;
+        for (int i = index; i < n; i++) {
+            printf("%d=>", RQ[i]);
+            TotalHeadMoment += abs(RQ[i] - initial);
+            initial = RQ[i];
+        }
+    }
+    printf("end\nTotal head movement is %d\n", TotalHeadMoment);
+}
+
+void C_SCAN(int RQ[], int n, int initial, int size, int move) {
+    int TotalHeadMoment = 0;
+    // Sort the request queue
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (RQ[j] > RQ[j + 1]) {
+                int temp = RQ[j];
+                RQ[j] = RQ[j + 1];
+                RQ[j + 1] = temp;
+            }
+        }
+    }
+    printf("%d=>", initial);
+    int index;
+    for (int i = 0; i < n; i++) {
+        if (initial < RQ[i]) {
+            index = i;
+            break;
+        }
+    }
+    if (move == 1) {
+        for (int i = index; i < n; i++) {
+            printf("%d=>", RQ[i]);
+            TotalHeadMoment += abs(RQ[i] - initial);
+            initial = RQ[i];
+        }
+        TotalHeadMoment += abs(size - RQ[n - 1] - 1) + size - 1;
+        printf("%d=>0=>", size - 1);
+        initial = 0;
+        for (int i = 0; i < index; i++) {
+            printf("%d=>", RQ[i]);
+            TotalHeadMoment += abs(RQ[i] - initial);
+            initial = RQ[i];
+        }
+    } else {
+        for (int i = index - 1; i >= 0; i--) {
+            printf("%d=>", RQ[i]);
+            TotalHeadMoment += abs(RQ[i] - initial);
+            initial = RQ[i];
+        }
+        TotalHeadMoment += abs(RQ[0] - 0) + size - 1;
+        printf("0=>%d=>", size - 1);
+        initial = size - 1;
+        for (int i = n - 1; i >= index; i--) {
+            printf("%d=>", RQ[i]);
+            TotalHeadMoment += abs(RQ[i] - initial);
+            initial = RQ[i];
+        }
+    }
+    printf("end\nTotal head movement is %d\n", TotalHeadMoment);
+}
+
+void LOOK(int RQ[], int n, int initial, int size, int move) {
+    int TotalHeadMoment = 0;
+    // Sort the request queue
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (RQ[j] > RQ[j + 1]) {
+                int temp = RQ[j];
+                RQ[j] = RQ[j + 1];
+                RQ[j + 1] = temp;
+            }
+        }
+    }
+    printf("%d=>", initial);
+    int index;
+    for (int i = 0; i < n; i++) {
+        if (initial < RQ[i]) {
+            index = i;
+            break;
+        }
+    }
+    if (move == 1) {
+        for (int i = index; i < n; i++) {
+            printf("%d=>", RQ[i]);
+            TotalHeadMoment += abs(RQ[i] - initial);
+            initial = RQ[i];
+        }
+        for (int i = index - 1; i >= 0; i--) {
+            printf("%d=>", RQ[i]);
+            TotalHeadMoment += abs(RQ[i] - initial);
+            initial = RQ[i];
+        }
+    } else {
+        for (int i = index - 1; i >= 0; i--) {
+            printf("%d=>", RQ[i]);
+            TotalHeadMoment += abs(RQ[i] - initial);
+            initial = RQ[i];
+        }
+        for (int i = index; i < n; i++) {
+            printf("%d=>", RQ[i]);
+            TotalHeadMoment += abs(RQ[i] - initial);
+            initial = RQ[i];
+        }
+    }
+    printf("end\nTotal head movement is %d\n", TotalHeadMoment);
+}
+
+void C_LOOK(int RQ[], int n, int initial, int size, int move) {
+    int TotalHeadMoment = 0;
+    // Sort the request queue
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (RQ[j] > RQ[j + 1]) {
+                int temp = RQ[j];
+                RQ[j] = RQ[j + 1];
+                RQ[j + 1] = temp;
+            }
+        }
+    }
+    printf("%d=>", initial);
+    int index;
+    for (int i = 0; i < n; i++) {
+        if (initial < RQ[i]) {
+            index = i;
+            break;
+        }
+    }
+    if (move == 1) {
+        for (int i = index; i < n; i++) {
+            printf("%d=>", RQ[i]);
+            TotalHeadMoment += abs(RQ[i] - initial);
+            initial = RQ[i];
+        }
+        for (int i = 0; i < index; i++) {
+            printf("%d=>", RQ[i]);
+            TotalHeadMoment += abs(RQ[i] - initial);
+            initial = RQ[i];
+        }
+    } else {
+        for (int i = index - 1; i >= 0; i--) {
+            printf("%d=>", RQ[i]);
+            TotalHeadMoment += abs(RQ[i] - initial);
+            initial = RQ[i];
+        }
+        for (int i = n - 1; i >= index; i--) {
+            printf("%d=>", RQ[i]);
+            TotalHeadMoment += abs(RQ[i] - initial);
+            initial = RQ[i];
+        }
+    }
+    printf("end\nTotal head movement is %d\n", TotalHeadMoment);
+}
+
+int main() {
+    int choice, n, initial, size, move;
+    printf("Enter the number of Requests: ");
+    scanf("%d", &n);
+    int RQ[n];
+    printf("Enter the Requests sequence:\n");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &RQ[i]);
+    }
+    printf("Enter initial head position: ");
+    scanf("%d", &initial);
+    printf("Enter total disk size: ");
+    scanf("%d", &size);
+    printf("Enter the head movement direction for high (1) and for low (0): ");
+    scanf("%d", &move);
+
+    do {
+        printf("\nChoose a disk scheduling algorithm:\n");
+        printf("1. FCFS\n");
+        printf("2. SSTF\n");
+        printf("3. SCAN\n");
+        printf("4. C-SCAN\n");
+        printf("5. LOOK\n");
+        printf("6. C-LOOK\n");
+        printf("7. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                FCFS(RQ, n, initial);
+                break;
+            case 2:
+                SSTF(RQ, n, initial);
+                break;
+            case 3:
+                SCAN(RQ, n, initial, size, move);
+                break;
+            case 4:
+                C_SCAN(RQ, n, initial, size, move);
+                break;
+            case 5:
+                LOOK(RQ, n, initial, size, move);
+                break;
+            case 6:
+                C_LOOK(RQ, n, initial, size, move);
+                break;
+            case 7:
+                printf("Exiting...\n");
+                break;
+            default:
+                printf("Invalid choice! Please enter a number between 1 and 7.\n");
+                break;
+        }
+    } while (choice != 7);
+
+    return 0;
+}

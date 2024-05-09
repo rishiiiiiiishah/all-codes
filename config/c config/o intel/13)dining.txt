@@ -1,0 +1,44 @@
+#include <iostream>
+#include <thread>
+#include <mutex>
+#include <chrono>
+#include <random>
+
+#define NUM_PHILOSOPHERS 5
+
+std::mutex forks[NUM_PHILOSOPHERS];
+
+void philosopher(int id) {
+    int left_fork = id;
+    int right_fork = (id + 1) % NUM_PHILOSOPHERS;
+    
+    while (true) {
+        // Thinking
+        std::cout << "Philosopher " << id << " is thinking." << std::endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(std::rand() % 1000));
+        
+        // Pick up forks
+        std::lock(forks[left_fork], forks[right_fork]);
+        std::lock_guard<std::mutex> left_lock(forks[left_fork], std::adopt_lock);
+        std::lock_guard<std::mutex> right_lock(forks[right_fork], std::adopt_lock);
+        
+        // Eating
+        std::cout << "Philosopher " << id << " is eating." << std::endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(std::rand() % 1000));
+    }
+}
+
+int main() {
+    std::thread philosophers[NUM_PHILOSOPHERS];
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
+    
+    for (int i = 0; i < NUM_PHILOSOPHERS; i++) {
+        philosophers[i] = std::thread(philosopher, i);
+    }
+    
+    for (int i = 0; i < NUM_PHILOSOPHERS; i++) {
+        philosophers[i].join();
+    }
+    
+    return 0;
+}

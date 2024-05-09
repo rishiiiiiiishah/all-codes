@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #1e90ff; /* blue background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .container {
+    background-color: #ccc; /* grey background */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-top: 0;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="checkbox"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    box-sizing: border-box;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  .accept-terms {
+    display: flex;
+    align-items: center;
+  }
+  
+  .accept-terms input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  .register-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1e90ff; /* blue button */
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .login {
+    text-align: center;
+    margin-top: 15px;
+  }
+  
+  .login a {
+    color: #1e90ff;
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Register</h2>
+  <p>Create your account. It's free and only takes a minute.</p>
+  <form action="#" method="post">
+    <label for="fname">First Name:</label>
+    <input type="text" id="fname" name="fname" required><br>
+    
+    <label for="lname">Last Name:</label>
+    <input type="text" id="lname" name="lname" required><br>
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br>
+    
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br>
+    
+    <label for="confirmPassword">Confirm Password:</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+    
+    <div class="accept-terms">
+      <input type="checkbox" id="acceptTerms" name="acceptTerms" required>
+      <label for="acceptTerms">I accept terms and privacy policy</label>
+    </div>
+    
+    <button type="submit" class="register-btn">Register</button>
+  </form>
+  
+  <p class="login">Already have an account? <a href="#">Sign in</a></p>
+</div>
+
+</body>
+</html>

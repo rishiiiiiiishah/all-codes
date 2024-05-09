@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Change Background Color on Mouse Enter</title>
+<style>
+  .element {
+    width: 200px;
+    height: 200px;
+    background-color: lightblue;
+    text-align: center;
+    line-height: 200px;
+    cursor: pointer;
+  }
+</style>
+<script>
+function changeColor() {
+    // Get the element by its id
+    let element = document.getElementById("myElement");
+    // Change the background color
+    element.style.backgroundColor = "lightgreen";
+}
+</script>
+</head>
+<body>
+
+<div id="myElement" class="element" onmouseenter="changeColor()">Mouse over this element to change background color</div>
+
+</body>
+</html>

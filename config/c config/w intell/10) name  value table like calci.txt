@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Layout</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    table {
+        width: 80%;
+        margin: 0 auto;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+    th {
+        background-color: #f2f2f2;
+        text-align: left;
+    }
+    .checkbox-label {
+        display: inline-block;
+        margin-right: 10px;
+    }
+</style>
+</head>
+<body>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Value</th>
+    </tr>
+    <tr>
+        <td>Name:</td>
+        <td><input type="text" id="name" name="name"></td>
+    </tr>
+    <tr>
+        <td>Sex:</td>
+        <td>
+            <select id="sex" name="sex">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>Eye Color:</td>
+        <td>
+            <select id="eye-color" name="eye-color">
+                <option value="blue">Blue</option>
+                <option value="brown">Brown</option>
+                <option value="green">Green</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>Check all that apply:</td>
+        <td>
+            <label class="checkbox-label" for="tall">Over 6 feet tall</label>
+            <input type="checkbox" id="tall" name="tall">
+            <label class="checkbox-label" for="heavy">Over 200 pounds</label>
+            <input type="checkbox" id="heavy" name="heavy">
+        </td>
+    </tr>
+    <tr>
+        <td>Describe your athletic ability:</td>
+        <td><textarea id="athletic-ability" name="athletic-ability" rows="4" cols="30"></textarea></td>
+    </tr>
+    <tr>
+        <td colspan="2" style="text-align: right;">
+            <button id="info">Submit</button>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
