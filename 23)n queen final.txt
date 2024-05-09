@@ -1,0 +1,98 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+void printBoard(int** board, int n) {
+    printf("Solution:\n");
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (board[i][j] == 1) {
+                printf("%d ", j + 1);
+            }
+        }
+    }
+    printf("\n");
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%c ", (board[i][j] == 1) ? 'Q' : '.');
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+bool isSafe(int** board, int row, int col, int n) {
+    for (int i = 0; i < col; i++) {
+        if (board[row][i]) {
+            return false;
+        }
+    }
+
+    for (int i = row, j = col; i >= 0 && j >= 0; i--, j--) {
+        if (board[i][j]) {
+            return false;
+        }
+    }
+
+    for (int i = row, j = col; i < n && j >= 0; i++, j--) {
+        if (board[i][j]) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void solveNQueens(int** board, int col, int n, int* solutions) {
+    if (col == n) {
+        printBoard(board, n);
+        (*solutions)++;
+        return;
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (isSafe(board, i, col, n)) {
+            board[i][col] = 1;
+            solveNQueens(board, col + 1, n, solutions);
+            board[i][col] = 0;
+        }
+    }
+}
+
+int main() {
+    int n;
+
+    printf("Enter the board dimension: ");
+    scanf("%d", &n);
+
+    if (n <= 0) {
+        printf("Invalid board dimension.\n");
+        return 1;
+    }
+
+    int** board = (int**)malloc(n * sizeof(int*));
+    for (int i = 0; i < n; i++) {
+        board[i] = (int*)malloc(n * sizeof(int));
+        for (int j = 0; j < n; j++) {
+            board[i][j] = 0;
+        }
+    }
+
+    int solutions = 0;
+    solveNQueens(board, 0, n, &solutions);
+
+    if (solutions == 0) {
+        printf("No solutions found.\n");
+    } else {
+        printf("Total solutions found: %d\n", solutions);
+    }
+
+    for (int i = 0; i < n; i++) {
+        free(board[i]);
+    }
+    free(board);
+
+    return 0;
+}
