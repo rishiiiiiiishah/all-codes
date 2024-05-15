@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hamburger Navbar</title>
+  <style>
+   
+   .yas img {
+    width: 100%;
+    height: auto;
+   
+   }
+
+   .yas {
+    display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+   
+}
+   
+
+
+    .image-container img {
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+
+
+
+
+  <div class="yas">
+    <img src="amazon.png" alt="">
+    <img src="amazon.png" alt="">
+    <img src="amazon.png" alt="">
+  </div>
+
+
+  <div class="yas">
+    <img src="amazon.png" alt="">
+    <img src="amazon.png" alt="">
+    <img src="amazon.png" alt="">
+  </div>
+
+
+  <div class="yas">
+    <img src="amazon.png" alt="">
+    <img src="amazon.png" alt="">
+    <img src="amazon.png" alt="">
+  </div>
+
+ 
+</body>
+</html>

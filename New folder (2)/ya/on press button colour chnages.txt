@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<div>
+    <button onclick="changebackground()">on your way</button>
+</div>
+
+   <script>
+
+function changebackground() {
+    var colour = getcolour(); 
+    document.body.style.background=colour;
+}
+
+function getcolour() {
+    return "#" + Math.floor(Math.random() * 123455).toString(12);
+}
+
+
+return '#' + Math.floor(Math.random()*12345).toString(12);
+
+
+   </script>
+</body>
+</html>

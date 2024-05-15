@@ -1,0 +1,22 @@
+interface Product {
+    name: string;
+    price: number;
+    description: string;
+}
+
+// Example product
+const product: Product = {
+    name: "Example Product",
+    price: 19.99,
+    description: "This is an example product description."
+};
+
+// Function to display product details
+function displayProductDetails(product: Product): void {
+    console.log(`Name: ${product.name}`);
+    console.log(`Price: $${product.price}`);
+    console.log(`Description: ${product.description}`);
+}
+
+// Displaying product details
+displayProductDetails(product);

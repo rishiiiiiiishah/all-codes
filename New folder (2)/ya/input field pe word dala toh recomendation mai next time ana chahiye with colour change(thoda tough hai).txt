@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+  /* CSS styles for changing recommendation item color */
+  .results li {
+    color: #d41818; /* Default color */
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Add transition effect for smooth color change */
+  }
+
+  .results li:hover {
+    background-color: #f0f0f0;
+  }
+
+  /* Recommended word color */
+  .recommended {
+    color: rgb(28, 0, 128); /* Set recommended word color to green */
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="wrapper">
+    <input
+      type="text"
+      name="search"
+      id="search"
+      placeholder="Type to search"
+      autocomplete="chrome-off"
+    />
+    <button id="submitButton">Submit</button>
+    <button id="addButton"><i class="fa fa-plus"></i></button>
+    <div class="results">
+      <ul></ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  let searchable = [
+    "Elastic",
+   
+  ];
+
+  const searchInput = document.getElementById("search");
+  const addButton = document.getElementById("addButton");
+  const submitButton = document.getElementById("submitButton");
+  const searchWrapper = document.querySelector(".wrapper");
+  const resultsWrapper = document.querySelector(".results");
+
+  searchInput.addEventListener("keyup", () => {
+    let results = [];
+    let input = searchInput.value;
+    if (input.length) {
+      results = searchable.filter((item) => {
+        return item.toLowerCase().includes(input.toLowerCase());
+      });
+    }
+    renderResults(results);
+  });
+
+  submitButton.addEventListener("click", () => {
+    const newItem = searchInput.value.trim();
+    if (newItem) {
+      searchable.push(newItem);
+      searchInput.value = ""; // Clear input field after submission
+    }
+  });
+
+  addButton.addEventListener("click", () => {
+    const newItem = prompt("Enter a new item to add:");
+    if (newItem) {
+      searchable.push(newItem);
+    }
+  });
+
+  function renderResults(results) {
+    if (!results.length) {
+      return searchWrapper.classList.remove("show");
+    }
+
+    const content = results
+      .map((item) => {
+        return `<li class="recommended">${item}</li>`; // Apply .recommended class to all items
+      })
+      .join("");
+
+    searchWrapper.classList.add("show");
+    resultsWrapper.innerHTML = `<ul>${content}</ul>`;
+  }
+</script>
+</body>
+</html>

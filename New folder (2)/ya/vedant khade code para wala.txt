@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Highlighter</title>
+  <style>
+    .highlight {
+      background-color: yellow;
+    }
+  </style>
+</head>
+<body>
+  <input type="text" id="searchInput" placeholder="Enter word to search">
+  <div id="paragraph">
+    <!-- Your paragraph goes here -->
+    <p id="highlightedText">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam convallis enim nec ex finibus, non mattis urna dignissim. Sed facilisis, libero sit amet rutrum finibus, arcu arcu posuere purus, vitae malesuada turpis purus id mauris. Mauris aliquam, enim nec vestibulum tincidunt, justo ex gravida quam, at sagittis turpis augue auctor risus. Nulla facilisi. Nam eu purus ut libero convallis malesuada. Aenean vel nisi id nunc scelerisque lacinia et vel est. Morbi nec mauris sapien. Ut sodales tortor vitae enim ultricies, at congue velit suscipit. Nullam laoreet, nulla eu accumsan sodales, felis ex consequat arcu, at semper elit ante vitae metus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec ac tempus felis. Ut pellentesque, eros a tincidunt bibendum, nulla magna elementum quam, et laoreet nisl leo in tellus. Fusce posuere nunc vitae mauris lacinia congue.</p>
+  </div>
+  <script>
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const searchText = this.value.toLowerCase();
+      const paragraph = document.getElementById('highlightedText');
+      const paragraphText = paragraph.textContent;
+      const words = paragraphText.split(' ');
+
+      paragraph.innerHTML = words.map(word => {
+        if (word.toLowerCase().includes(searchText) && searchText !== '') {
+          return '<span class="highlight">' + word + '</span>';
+        } else {
+          return word;
+        }
+      }).join(' ');
+    });
+  </script>
+</body>
+</html>

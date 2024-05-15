@@ -1,0 +1,61 @@
+class UserInteraction {
+    constructor() {
+        this.inputElement = document.createElement('input');
+        this.inputElement.type = 'text';
+        this.inputElement.placeholder = 'Enter your text';
+
+        this.outputElement = document.createElement('div');
+
+        const submitButton = document.createElement('button');
+        submitButton.textContent = 'Submit';
+        submitButton.addEventListener('click', this.handleSubmit.bind(this));
+
+        document.body.appendChild(this.inputElement);
+        document.body.appendChild(submitButton);
+        document.body.appendChild(this.outputElement);
+    }
+
+    handleSubmit() {
+        const userInput = this.inputElement.value;
+        this.displayUserInput(userInput);
+    }
+
+    displayUserInput(input) {
+        this.outputElement.innerHTML = `<p>You entered: ${input}</p>`;
+    }
+}
+
+const userInteraction = new UserInteraction();
+
+
+
+
+
+
+
+
+
+
+html
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Interaction</title>
+</head>
+<body>
+    <div>
+        <input type="text" id="textInput" placeholder="Enter your text">
+        <button id="submitButton">Submit</button>
+        <div id="output"></div>
+    </div>
+    <script src="p.js"></script>
+</body>
+</html>
+
+
+
+

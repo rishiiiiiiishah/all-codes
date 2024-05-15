@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .coloured-div {
+            background-color: blue;
+            width: 200px;
+            height: 200px;
+
+        }
+
+        button {
+font-size: 16px;
+padding: 10px 20px;
+cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    
+    
+    <div class="coloured-div">
+    </div>
+    <button onmouseover="toggle()" onmouseout="toggle()"></button>
+
+    <script>
+        function toggle() {
+            var colourdiv =  document.querySelector(".coloured-div");
+            colourdiv.style.visibility=(colourdiv.style.visibility=="hidden")?"visible":"hidden";
+        }
+    </script>
+</body>
+</html>

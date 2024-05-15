@@ -1,0 +1,18 @@
+import { useState } from 'react'
+
+import './App.css'
+
+function App() {
+  const [visible, setVisible] = useState(true)
+ function hanldeVisiblity(){
+    setVisible((state)=> !state);
+  }
+  return (
+    <>
+{visible && <p>Paragrpah</p>}
+<button onClick={hanldeVisiblity}>Toggle</button>
+     </>
+  )
+}
+
+export default App

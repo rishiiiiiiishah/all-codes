@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  overflow: auto;
+}
+
+.modal img {
+  display: block;
+  margin: auto;
+  max-width: 90%;
+  max-height: 90%;
+}
+        .gallery {
+            display: flex;
+            justify-content: center;
+            
+        }
+
+        .gallery img {
+            width: 150px;
+            height: auto;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <div class="gallery">
+        <img src="r.jpg.jpg" alt="" onclick="openModal('r.jpg.jpg')">
+    </div>
+
+
+    <div id="modal" class="modal" onclick="closeModal()">
+        <img src="" alt="Enlarged Image" id="modal-img">
+      </div>
+      
+
+    <script>
+        function openModal(imageSrc) {
+            document.getElementById("modal").style.display="block"
+            document.getElementById("modal-img").src=imageSrc;
+        }
+
+        function closeModal() {
+            document.getElementById("modal").style.display="none";
+        }
+    </script>
+</body>
+
+
+
+</html>

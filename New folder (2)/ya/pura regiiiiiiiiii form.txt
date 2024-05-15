@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <style>
+        .container {
+            width: 300px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        button {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #fadeImg {
+            margin-top: 20px;
+            width: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Registration Form</h2>
+    <form id="registrationForm" onsubmit="return validateRegistrationForm()">
+        <div class="form-group">
+            <label for="regUsername">Username:</label>
+            <input type="text" id="regUsername" name="regUsername" required>
+        </div>
+        <div class="form-group">
+            <label for="regEmail">Email ID:</label>
+            <input type="email" id="regEmail" name="regEmail" required>
+        </div>
+        <div class="form-group">
+            <label for="regPassword">Password:</label>
+            <input type="password" id="regPassword" name="regPassword" required>
+        </div>
+        <div class="form-group">
+            <label for="regConfirmPassword">Confirm Password:</label>
+            <input type="password" id="regConfirmPassword" name="regConfirmPassword" required>
+        </div>
+        <div class="form-group">
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="">Select</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+        <button type="submit">Register</button>
+    </form>
+
+    <h2>Login Form</h2>
+    <form id="loginForm" onsubmit="return validateLoginForm()">
+        <div class="form-group">
+            <label for="loginUsername">Username:</label>
+            <input type="text" id="loginUsername" name="loginUsername" required>
+        </div>
+        <div class="form-group">
+            <label for="loginPassword">Password:</label>
+            <input type="password" id="loginPassword" name="loginPassword" required>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+</div>
+
+<img id="fadeImg" src="amazon.png" alt="Fade Image">
+
+<script>
+    window.onload = function() {
+        const fadeImg = document.getElementById('fadeImg');
+        setInterval(function() {
+            fadeImg.style.transition = "opacity 2s";
+            fadeImg.style.opacity = (fadeImg.style.opacity == "1" || fadeImg.style.opacity === "") ? "0" : "1";
+        }, 2000);
+    };
+
+    function validateRegistrationForm() {
+        const regUsername = document.getElementById('regUsername').value;
+        const regEmail = document.getElementById('regEmail').value;
+        const regPassword = document.getElementById('regPassword').value;
+        const regConfirmPassword = document.getElementById('regConfirmPassword').value;
+        const gender = document.getElementById('gender').value;
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+        if (!regUsername.trim()) {
+            alert("Please enter a username.");
+            return false;
+        }
+
+        if (!emailRegex.test(regEmail)) {
+            alert("Please enter a valid email address.");
+            return false;
+        }
+
+        if (!passwordRegex.test(regPassword)) {
+            alert("Password must be at least 8 characters long and contain at least one letter and one number.");
+            return false;
+        }
+
+        if (regPassword !== regConfirmPassword) {
+            alert("Passwords do not match.");
+            return false;
+        }
+
+        if (!gender) {
+            alert("Please select your gender.");
+            return false;
+        }
+
+        const isConfirmed = confirm("Are you sure you want to register?");
+        return isConfirmed;
+    }
+
+    function validateLoginForm() {
+        const loginUsername = document.getElementById('loginUsername').value;
+        const loginPassword = document.getElementById('loginPassword').value;
+
+        // You can add your validation logic for login here
+
+        const isConfirmed = confirm("Are you sure you want to login?");
+        return isConfirmed;
+    }
+</script>
+
+</body>
+</html>

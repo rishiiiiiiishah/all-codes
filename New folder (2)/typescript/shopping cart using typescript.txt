@@ -1,0 +1,76 @@
+import * as readline from 'readline';
+
+type CartItem = {
+    id: number;
+    name: string;
+    price: number;
+};
+
+class ShoppingCart {
+    private items: CartItem[] = [];
+
+    addItem(item: CartItem) {
+        this.items.push(item);
+    }
+
+    removeItem(itemId: number) {
+        this.items = this.items.filter(item => item.id !== itemId);
+    }
+
+    getTotal(): number {
+        return this.items.reduce((total, item) => total + item.price, 0);
+    }
+
+    displayCart() {
+        console.log("Items in Cart:");
+        this.items.forEach(item => {
+            console.log(`${item.name}: $${item.price}`);
+        });
+        console.log(`Total: $${this.getTotal()}`);
+    }
+}
+
+function promptUser(question: string): Promise<string> {
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+
+    return new Promise((resolve) => {
+        rl.question(question, (answer) => {
+            rl.close();
+            resolve(answer.trim());
+        });
+    });
+}
+
+async function main() {
+    const cart = new ShoppingCart();
+
+    while (true) {
+        const choice = await promptUser('Enter "add" to add item, "remove" to remove item, "display" to display cart, or "exit" to exit:');
+
+        switch (choice.toLowerCase()) {
+            case 'add':
+                const id = Number(await promptUser('Enter item ID:'));
+                const name = await promptUser('Enter item name:');
+                const price = Number(await promptUser('Enter item price:'));
+                cart.addItem({ id, name, price });
+                break;
+            case 'remove':
+                const removeId = Number(await promptUser('Enter item ID to remove:'));
+                cart.removeItem(removeId);
+                break;
+            case 'display':
+                cart.displayCart();
+                break;
+            case 'exit':
+                console.log('Exiting...');
+                return;
+            default:
+                console.log('Invalid choice. Please try again.');
+        }
+    }
+}
+
+main().catch(err => console.error(err));

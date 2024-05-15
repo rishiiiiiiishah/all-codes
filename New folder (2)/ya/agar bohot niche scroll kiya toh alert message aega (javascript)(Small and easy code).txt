@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+  
+        
+ <style>
+    .yash {
+         height: 1500px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="yash">
+
+    </div>
+
+   <script>
+     window.addEventListener('scroll',function() {
+var scrollPosition=window.scrollY;
+var threshold=300;
+if(scrollPosition > threshold) {
+    alert('nihe chala gaya');
+
+}
+    });
+   </script>
+   
+    </style>
+</body>
+</html>

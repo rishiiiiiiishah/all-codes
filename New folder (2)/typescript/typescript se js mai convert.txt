@@ -1,0 +1,34 @@
+// JavaScript code
+function calculateRectangleArea(length, width) {
+  return length * width;
+}
+
+const length = 5;
+const width = 10;
+const area = calculateRectangleArea(length, width);
+console.log("Area of the rectangle:", area);
+
+
+
+
+
+
+
+
+
+
+
+typescript
+
+
+
+
+// TypeScript code
+function calculateRectangleArea(length: number, width: number): number {
+  return length * width;
+}
+
+const length: number = 5;
+const width: number = 10;
+const area: number = calculateRectangleArea(length, width);
+console.log("Area of the rectangle:", area);

@@ -1,0 +1,408 @@
+components ke andar card 1
+
+
+
+
+const Card1 = () => {
+    return (
+      <div className="card">
+  
+  
+          <h2>Component 1 with Lazy load</h2>
+      </div>
+    )
+  }
+  
+  export default Card1
+
+
+
+
+
+
+
+similarly card 2 nd card 3
+
+
+
+
+
+
+
+
+
+app.css in components
+
+
+
+
+
+
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.jsx or app.js
+
+
+
+
+
+
+
+
+
+
+
+import  { Suspense, lazy, useState, useEffect } from "react";
+
+const Card1 = lazy(() => import('./components/card1'));
+const Card2 = lazy(() => import('./components/card2'));
+const Card3 = lazy(() => import('./components/card3'));
+
+function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading delay
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); // Change the delay time as needed (in milliseconds)
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <>
+      <h1>Lazy Load</h1>
+    
+      <Suspense fallback={<div>Loading...</div>}>
+        {isLoading ? (
+          <div className="spinner-container"></div>
+        ) : (
+          <>
+            <Card1 />
+            <Card2 />
+            <Card3 />
+          </>
+        )}
+      </Suspense>
+    </>
+  );
+}
+
+export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+index.css
+
+
+
+
+
+
+
+
+
+
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+.card{
+  width: 100%;
+  margin-bottom: 10rem;
+}
+
+.spinner-container{
+  width: 50px;
+  height: 6px;
+  border-radius: 8px;
+  background-color: #bdbaba;
+  position: relative;
+overflow: hidden;
+}
+
+
+.spinner-container::after{
+  content: "";
+  position: absolute;
+  background-color: rgb(9, 96, 196);
+  top: 0;
+  bottom: 0;
+  border-radius: 8px;
+
+  height: 100%;
+  width: 25px;
+  animation: left-to-right infinite .5s  ease-in-out;
+}
+@keyframes left-to-right {
+    0%{
+      transform: translateX(0%);
+    }
+    25%{
+      transform: translateX(50%);
+    }
+    50%{
+      transform: translateX(100%);
+    }
+    100%{
+      transform: translateX(0%);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+index.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+
+reportWebVitals();
+
+
+
+
+
+
+
+
+
+
+
+lazy load by vinit
+
+
+
+import React, { useState } from 'react';
+
+function LazyLoadComponent() {
+    const [count, setCount] = useState(0);
+    const arr = ["LazyPage Loading", "Page Loaded Successful"];
+
+    setTimeout(() => setCount(count + 1), 2000);
+
+    return (
+        <div id="lazy-load">
+            {arr[count]}
+        </div>
+    );
+}
+
+export default LazyLoadComponent;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

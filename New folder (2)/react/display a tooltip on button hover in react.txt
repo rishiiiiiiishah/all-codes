@@ -1,0 +1,118 @@
+tool.css
+
+
+
+
+.tooltip-container {
+    position: relative;
+  }
+  
+  .tooltip-button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  
+  .tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.9;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  
+
+
+
+
+
+
+
+tool.jsx
+
+
+
+
+import React, { useState } from 'react';
+import './tool.css';
+
+function TooltipButton({ text, tooltipText }) {
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const handleMouseOver = () => {
+    setShowTooltip(true);
+  };
+
+  const handleMouseOut = () => {
+    setShowTooltip(false);
+  };
+
+  return (
+    <div className="tooltip-container">
+      <button
+        className="tooltip-button"
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
+      >
+        {text}
+      </button>
+      {showTooltip && <div className="tooltip">{tooltipText}</div>}
+    </div>
+  );
+}
+
+export default TooltipButton;
+
+
+
+
+
+
+
+app.js
+
+
+
+import React from 'react';
+import TooltipButton from './components/tool.jsx'; // Correct import path assuming TooltipButton component is in TooltipButton.jsx
+import './components/tool.css'; // Import your CSS file for styling if needed
+
+function App() {
+  return (
+    <div className="App">
+      <h1>Tooltip Button Example</h1>
+      <TooltipButton text="Click me" tooltipText="This is a tooltip message!" />
+    </div>
+  );
+}
+
+export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

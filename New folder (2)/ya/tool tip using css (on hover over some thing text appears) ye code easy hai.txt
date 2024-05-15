@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tooltip Example</title>
+<style>
+  .tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+</style>
+</head>
+<body>
+
+<div class="tooltip" onmouseover="showTooltip()" onmouseout="hideTooltip()">
+  Hover over me
+  <span class="tooltiptext" id="tooltipText">Tooltip text</span>
+</div>
+
+<script>
+function showTooltip() {
+  var tooltip = document.getElementById("tooltipText");
+  tooltip.style.visibility = "visible";
+  tooltip.style.opacity = "1";
+}
+
+function hideTooltip() {
+  var tooltip = document.getElementById("tooltipText");
+  tooltip.style.visibility = "hidden";
+  tooltip.style.opacity = "0";
+}
+</script>
+
+</body>
+</html>
